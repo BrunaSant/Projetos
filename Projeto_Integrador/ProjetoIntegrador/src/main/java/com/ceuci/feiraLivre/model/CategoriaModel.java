@@ -1,19 +1,13 @@
 package com.ceuci.feiraLivre.model;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="categoria")
@@ -34,10 +28,10 @@ public class CategoriaModel {
 	
 	@Column
 	public String unidade_medida;
-	
-	@OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("categoria")
-	private List<ProdutoModel> produto;
+
+//	@OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
+//	@JsonIgnoreProperties("categoria")
+//	private List<ProdutoModel> produto;
 	
 	
 	//get e set
@@ -50,12 +44,12 @@ public class CategoriaModel {
 		this.id = id;
 	}
 
-	public String getTipo() {
+	public String getCategoria() {
 		return categoria;
 	}
 
-	public void setTipo(String tipo) {
-		this.categoria = tipo;
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
 
 	public boolean isOrganico() {
@@ -73,7 +67,6 @@ public class CategoriaModel {
 	public void setUnidade_medida(String unidade_medida) {
 		this.unidade_medida = unidade_medida;
 	}
-	
 	
 	
 	

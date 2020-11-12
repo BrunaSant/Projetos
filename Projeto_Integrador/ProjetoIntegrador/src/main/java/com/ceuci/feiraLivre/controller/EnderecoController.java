@@ -15,41 +15,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ceuci.feiraLivre.model.CategoriaModel;
-import com.ceuci.feiraLivre.repository.CategoriaRepository;
+import com.ceuci.feiraLivre.model.EnderecoModel;
+import com.ceuci.feiraLivre.model.ProdutoModel;
+import com.ceuci.feiraLivre.repository.EnderecoRepository;
 
 @RestController
-@RequestMapping("/categoria")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
-public class CategoriaController {
-	
+@RequestMapping("/endereco")
+@CrossOrigin("*")
+public class EnderecoController {
+
 	@Autowired
-	private CategoriaRepository repository;
-	
-	//Pegar todas as categotias
+	private EnderecoRepository repository;
+
+	//Pegar todos os endereços
 	@GetMapping
-	public ResponseEntity<List<CategoriaModel>> getAll(){
+	public ResponseEntity<List<EnderecoModel>> GetAll() {
 		return ResponseEntity.ok(repository.findAll());
+
 	}
-	//Categoria por ID
+	//Pegar por ID
 	@GetMapping("/{id}")
-	public ResponseEntity<CategoriaModel> getById(@PathVariable Long id){
+	public ResponseEntity<EnderecoModel> GetById(@PathVariable Long id) {
 		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
+
 	}
-	//Listar por nome da categoria
-	@GetMapping("/nome/{categoria}")
-	public ResponseEntity<List<CategoriaModel>> getByNomeCategoria(@PathVariable String categoria){
-		return ResponseEntity.ok(repository.findAllByCategoriaContainingIgnoreCase(categoria));
+
+//	@GetMapping(value = "/cidadeS")
+//	public ResponseEntity<List<EnderecoModel>> findAllByCidadeS(){
+//		return ResponseEntity.ok(repository.findAllByCidadeS());
+//	}
+	//Pegar por cidade
+	@GetMapping("/cidades/{cidade}")
+	public ResponseEntity<List<EnderecoModel>> getByCidade(@PathVariable String cidade){
+		return ResponseEntity.ok(repository.findAllByCidadeContainingIgnoreCase(cidade));
 	}
 	//Inserir
 	@PostMapping
-	public ResponseEntity<CategoriaModel> post(@RequestBody CategoriaModel categoria){
-		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(categoria));
+	public ResponseEntity<EnderecoModel> post(@RequestBody EnderecoModel endereco) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(endereco));
 	}
 	//Atualizar
 	@PutMapping
-	public ResponseEntity<CategoriaModel> put(@RequestBody CategoriaModel categoria){
-		return ResponseEntity.ok(repository.save(categoria));
+	public ResponseEntity<EnderecoModel> put(@RequestBody EnderecoModel endereco) {
+		return ResponseEntity.status(HttpStatus.OK).body(repository.save(endereco));
 	}
 	//Deletar
 	@DeleteMapping("/{id}")

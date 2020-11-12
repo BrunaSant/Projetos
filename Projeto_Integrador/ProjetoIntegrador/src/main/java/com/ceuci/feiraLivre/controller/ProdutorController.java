@@ -15,43 +15,43 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ceuci.feiraLivre.model.ProdutoModel;
-import com.ceuci.feiraLivre.repository.ProdutoRepository;
+import com.ceuci.feiraLivre.model.ProdutorModel;
+import com.ceuci.feiraLivre.repository.ProdutorRepository;
+
 
 @RestController
-@RequestMapping("/produto")
+@RequestMapping("/produtor")
 @CrossOrigin("*")
-public class ProdutoController {
-	
+public class ProdutorController {
+
 	@Autowired
-	private ProdutoRepository repository;
+	private ProdutorRepository repository;
 	
 	//Pegar todos os produtos
 	@GetMapping
-	public ResponseEntity<List<ProdutoModel>> GetAll(){
+	public ResponseEntity<List<ProdutorModel>> GetAll(){
 		return ResponseEntity.ok(repository.findAll());
 	}
 	//Pegar por ID
 	@GetMapping("/{id}")
-	public ResponseEntity<ProdutoModel> GetById(@PathVariable Long id){
+	public ResponseEntity<ProdutorModel> GetById(@PathVariable Long id){
 		return repository.findById(id)
 				.map(resp -> ResponseEntity.ok(resp))
-				.orElse(ResponseEntity.notFound().build());
-				
+				.orElse(ResponseEntity.notFound().build());	
 	}
-	//Pegar por nome do produto
+	//Pegar por nome
 	@GetMapping("/titulo/{nome}")
-	public ResponseEntity<List<ProdutoModel>> getByNome(@PathVariable String nome){
+	public ResponseEntity<List<ProdutorModel>> getByNome(@PathVariable String nome){
 		return ResponseEntity.ok(repository.findAllByNomeContainingIgnoreCase(nome));
 	}
-	//Incluir
+	//Inserir
 	@PostMapping
-	public ResponseEntity<ProdutoModel> post (@RequestBody ProdutoModel postagem){
+	public ResponseEntity<ProdutorModel> post (@RequestBody ProdutorModel postagem){
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));
 	}
 	//Atualizar
 	@PutMapping
-	public ResponseEntity<ProdutoModel> put (@RequestBody ProdutoModel postagem){
+	public ResponseEntity<ProdutorModel> put (@RequestBody ProdutorModel postagem){
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem));
 	}
 	//Deletar
@@ -59,5 +59,4 @@ public class ProdutoController {
 	public void delete(@PathVariable Long id) {
 		repository.deleteById(id);
 	}
-	
 }
